@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize variables
     let cart = [];
     let currentSlide = 0;
     const totalSlides = document.querySelectorAll('.testimonial-slide').length;
     
-    // DOM Elements
     const menuItems = document.querySelectorAll('.menu-item');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const cartIcon = document.querySelector('.cart-icon');
@@ -47,9 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Menu Filtering
     filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove active class from all buttons
             filterBtns.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             this.classList.add('active');
             
             const filterValue = this.getAttribute('data-filter');
@@ -102,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Empty cart button click event
     if (emptyCartBtn) {
         emptyCartBtn.addEventListener('click', function() {
             closeCart();
@@ -123,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Save cart to localStorage
         saveCart();
     }
     
@@ -164,21 +158,19 @@ document.addEventListener('DOMContentLoaded', function() {
             emptyCartElement.style.display = 'none';
             cartCountElement.textContent = cart.reduce((total, item) => total + item.quantity, 0);
             
-            // Clear cart items container
             while (cartItemsContainer.firstChild && !cartItemsContainer.firstChild.classList?.contains('empty-cart')) {
                 cartItemsContainer.removeChild(cartItemsContainer.firstChild);
             }
-            
-            // Add cart items
+
             cart.forEach(item => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
                     <div class="cart-item-img">
-                        <img src="/api/placeholder/60/60" alt="${item.name}">
+                        <img src="/assets/${item.name}" alt="${item.name}">
                     </div>
                     <div class="cart-item-details">
-                        <h4 class="cart-item-name">₹${item.name}</h4>
+                        <h4 class="cart-item-name">${item.name}</h4>
                         <div class="cart-item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
                     </div>
                     <div class="cart-item-controls">
@@ -196,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 cartItemsContainer.insertBefore(cartItem, emptyCartElement);
             });
             
-            // Add event listeners to new buttons
             document.querySelectorAll('.remove-item').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -225,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Update cart summary
         const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         const deliveryFee = subtotal > 0 ? 10 : 0;
         const total = subtotal + deliveryFee;
@@ -234,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         totalElement.textContent = `₹${total.toFixed(2)}`;
     }
     
-    // Testimonial Slider
     function showSlide(index) {
         if (index < 0) {
             currentSlide = totalSlides - 1;
@@ -266,12 +255,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Auto slide testimonials
     setInterval(function() {
         showSlide(currentSlide + 1);
     }, 5000);
     
-    // Checkout button
     checkoutBtn.addEventListener('click', function() {
         if (cart.length > 0) {
             alert('Thank you for your order! Your delicious food will be on its way soon.');
@@ -284,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -298,12 +284,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
                 
-                // Close mobile menu if open
                 closeCart();
             }
         });
     });
-    
-    // Load cart from localStorage on page load
+
     loadCart();
 });
