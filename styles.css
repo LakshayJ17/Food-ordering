@@ -909,6 +909,29 @@ footer {
     html {
         font-size: 14px;
     }
+
+    header {
+        padding: 12px 0;
+    }
+    
+    header .container {
+        padding: 0 10px;
+    }
+    
+    .logo h1 {
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+    }
+    
+    .cart-icon {
+        font-size: 18px;
+        margin-left: 10px; 
+    }
+    
+    .cart-count {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
     
     nav {
         position: fixed;
@@ -1048,6 +1071,19 @@ footer {
 }
 
 @media (max-width: 375px) {
+    header .container {
+        padding: 0 5px;
+    }
+    
+    .hamburger span {
+        width: 22px;
+        height: 2px;
+    }
+    
+    .logo h1 {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+    }
+    
     .container {
         width: 100%;
         padding: 0 10px;
